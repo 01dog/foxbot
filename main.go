@@ -26,7 +26,7 @@ func main() {
 		return
 	}
 
-	dg.UpdateStatus(0, ".help")
+	dg.UpdateStatus(0, config.Prefix+"help")
 
 	fmt.Println("bot running!")
 	sc := make(chan os.Signal, 1)
