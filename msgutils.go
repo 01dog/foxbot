@@ -11,6 +11,7 @@ func init() {
 }
 
 func msgHelp(s *discordgo.Session, m *discordgo.MessageCreate, msgList []string) {
+	// check if help was given a specific (and valid) command
 	if len(msgList) == 2 {
 		if v, ok := activeCommands[strings.ToLower(msgList[1])]; ok {
 			v.helpCommand(s, m)
@@ -19,6 +20,7 @@ func msgHelp(s *discordgo.Session, m *discordgo.MessageCreate, msgList []string)
 
 	}
 
+	// gets a list of active commands
 	var commands []string
 	for _, v := range activeCommands {
 		if m.Author.ID == config.AdminID || !v.AdminOnly {
@@ -32,6 +34,7 @@ func msgHelp(s *discordgo.Session, m *discordgo.MessageCreate, msgList []string)
 	s.ChannelMessageSendEmbed(m.ChannelID, em)
 }
 
+// if help is given a specific command, this gets the Help field and sends it in an embed
 func (c Command) helpCommand(s *discordgo.Session, m *discordgo.MessageCreate) {
 	em := NewEmbed().
 		SetColor(0).

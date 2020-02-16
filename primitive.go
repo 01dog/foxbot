@@ -46,8 +46,8 @@ func pri(s *discordgo.Session, m *discordgo.MessageCreate, msgList []string) {
 		}
 		defer f.Close()
 
-		//manually creating this embed to attach the image
-		//could probably add file attach to embed.go later
+		// manually creating this embed to attach the image
+		// could probably add file attach to embed.go later
 		em := &discordgo.MessageSend{
 			Embed: &discordgo.MessageEmbed{
 				Title: m.Author.Username + "'s morphed avatar",
@@ -65,12 +65,12 @@ func pri(s *discordgo.Session, m *discordgo.MessageCreate, msgList []string) {
 				},
 			},
 		}
-
 		s.ChannelMessageSendComplex(m.ChannelID, em)
 	}
 
 	if len(m.Mentions) != 0 {
 		args := msgList[2:]
+
 		avatar, err := GetAvatarImage(s, m.Mentions[0].ID)
 		if err != nil {
 			fmt.Println("error getting user avatar:", err)
@@ -93,8 +93,8 @@ func pri(s *discordgo.Session, m *discordgo.MessageCreate, msgList []string) {
 		}
 		defer f.Close()
 
-		//manually creating this embed to attach the image
-		//could probably add file attach to embed.go later
+		// manually creating this embed to attach the image
+		// could probably add file attach to embed.go later
 		em := &discordgo.MessageSend{
 			Embed: &discordgo.MessageEmbed{
 				Title: m.Mentions[0].Username + "'s morphed avatar",
@@ -112,7 +112,6 @@ func pri(s *discordgo.Session, m *discordgo.MessageCreate, msgList []string) {
 				},
 			},
 		}
-
 		s.ChannelMessageSendComplex(m.ChannelID, em)
 	}
 }

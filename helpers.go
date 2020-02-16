@@ -20,12 +20,12 @@ func UserDetails(s *discordgo.Session, userID string) (user *discordgo.User, err
 	return
 }
 
-//GetAvatarURL will return the URL to the user's avatar
+//GetAvatarURL returns the URL to the user's avatar
 func GetAvatarURL() {
 	return
 }
 
-//GetAvatarImage will return a type image.Image of the user's avatar
+//GetAvatarImage returns a type image.Image of the user's avatar
 func GetAvatarImage(s *discordgo.Session, userID string) (img image.Image, err error) {
 	user, err := s.User(userID)
 	if err != nil {
@@ -53,7 +53,7 @@ func SaveImage(img image.Image, pname, fname string) (err error) {
 	return nil
 }
 
-//StrArrayToInt will iterate over an array of type string, and convert to type int
+// StrArrayToInt will iterate over an array of type string, and convert it to type int
 // this could probably be replaced with smarter code wherever im using this
 func StrArrayToInt(a []string) (ia []int, err error) {
 	for _, v := range a {

@@ -5,7 +5,7 @@ import (
 	"os"
 )
 
-// Config will hold our bot token
+// Config ...
 type Config struct {
 	Token   string
 	AdminID string
