@@ -85,6 +85,35 @@ func pri(s *discordgo.Session, m *discordgo.MessageCreate, msgList []string) {
 			fmt.Println("error:", err)
 			return
 		}
+
+		f, err := os.Open(filename)
+		if err != nil {
+			fmt.Println("error:", err)
+			return
+		}
+		defer f.Close()
+
+		//manually creating this embed to attach the image
+		//could probably add file attach to embed.go later
+		em := &discordgo.MessageSend{
+			Embed: &discordgo.MessageEmbed{
+				Title: m.Mentions[0].Username + "'s morphed avatar",
+				Image: &discordgo.MessageEmbedImage{
+					URL: "attachment://" + filename,
+				},
+				Footer: &discordgo.MessageEmbedFooter{
+					Text: "made with primitive by fogleman",
+				},
+			},
+			Files: []*discordgo.File{
+				&discordgo.File{
+					Name:   filename,
+					Reader: f,
+				},
+			},
+		}
+
+		s.ChannelMessageSendComplex(m.ChannelID, em)
 	}
 }
 

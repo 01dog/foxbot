@@ -29,6 +29,7 @@ func getAvatar(s *discordgo.Session, m *discordgo.MessageCreate, userID string) 
 	}
 
 	em := NewEmbed().
+		SetTitle(user.Username + "'s avatar").
 		SetImage(user.AvatarURL("2048")).MessageEmbed
 
 	s.ChannelMessageSendEmbed(m.ChannelID, em)
