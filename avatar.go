@@ -5,7 +5,7 @@ import (
 )
 
 func init() {
-	NewCommand("avatar", false, userAvatar).SetHelp("args: `@user`\nreturns the user's avatar").Add()
+	NewCommand("avatar", false, userAvatar).SetHelp("returns the user's avatar\n\nargs: `@user`").Add()
 }
 
 func userAvatar(s *discordgo.Session, m *discordgo.MessageCreate, msgList []string) {
