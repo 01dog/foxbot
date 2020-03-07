@@ -2,3 +2,4 @@ config.json
 tmp/*
 *.jpg
 *.png
+bot.agent
