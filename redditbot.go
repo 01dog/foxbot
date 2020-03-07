@@ -13,7 +13,7 @@ import (
 // TODO: clean this up a bit
 
 func init() {
-	NewCommand("reddit", false, RedditBot).Add()
+	NewCommand("reddit", false, RedditBot).SetHelp("get a random post from a subreddit\n\n args: `subreddit`").Add()
 }
 
 // RedditBot creates a bot and grabs posts from a given subreddit
@@ -26,6 +26,13 @@ func RedditBot(s *discordgo.Session, m *discordgo.MessageCreate, msgList []strin
 		return
 	}
 
+	if len(msgList) < 2 {
+		s.ChannelMessageSend(m.ChannelID, "i need a subreddit to search.")
+		return
+	} else if len(msgList) > 2 {
+		msgList = msgList[0:2]
+	}
+
 	subreddit := "/r/" + msgList[1]
 
 	harvest, err := bot.Listing(subreddit, "")
@@ -36,6 +43,7 @@ func RedditBot(s *discordgo.Session, m *discordgo.MessageCreate, msgList []strin
 
 	if len(harvest.Posts) == 0 {
 		s.ChannelMessageSend(m.ChannelID, "subreddit had no posts, try again.")
+		return
 	}
 
 	rand.Seed(time.Now().UnixNano())
