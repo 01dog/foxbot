@@ -12,6 +12,8 @@ func init() {
 	NewCommand("cat", false, catMsg).Add()
 	NewCommand("fox", false, foxMsg).Add()
 	NewCommand("mode", false, modeMsg).Add()
+	NewCommand("nyoom", false, nyoom).Add()
+	NewCommand("dmc3", false, dmc3).Add()
 }
 
 func dogMsg(s *discordgo.Session, m *discordgo.MessageCreate, msgList []string) {
@@ -57,4 +59,24 @@ func modeMsg(s *discordgo.Session, m *discordgo.MessageCreate, msgList []string)
 	messageChosen := messages[rand.Intn(len(messages))]
 
 	s.ChannelMessageSend(m.ChannelID, "mode "+messageChosen)
+}
+
+func nyoom(s *discordgo.Session, m *discordgo.MessageCreate, msgList []string) {
+	em := NewEmbed().
+		SetFooter("nyoooooooooooooooooooooooooooooooooooooooooooooom").
+		SetImage("https://media.discordapp.net/attachments/562589611310841858/676315314547458062/nyooooooom.gif").MessageEmbed
+
+	s.ChannelMessageSendEmbed(m.ChannelID, em)
+}
+
+func dmc3(s *discordgo.Session, m *discordgo.MessageCreate, msgList []string) {
+	messages := []string{
+		"Errr, I think you will laughing with your cola upsiding down watching this.", "I don't think anyone of you may notice this, tricky thing?",
+		"I bet many of your mind goes, boooooooom...", "Yeaa yeaa, I know you're laughing off me, bear me, I know I missed, hello~ low spec PC." +
+			" What can you expect? Gimme your razor of silence!", "What else haha///",
+	}
+	rand.Seed(time.Now().UnixNano())
+	messageChosen := messages[rand.Intn(len(messages))]
+
+	s.ChannelMessageSend(m.ChannelID, messageChosen)
 }
