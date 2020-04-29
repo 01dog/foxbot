@@ -24,9 +24,9 @@ func RenderIdenticon(id Identicon, userID string) (filename string, err error) {
 	if err != nil {
 		fmt.Println("error:", err)
 	}
+
 	defer f.Close()
 	png.Encode(f, img)
-
 	return filename, nil
 }
 
@@ -37,7 +37,6 @@ func setBg(img *image.RGBA) {
 func drawRect(rgba *image.RGBA, i int, c color.Color) {
 	size := 10
 	mRow := 5
-
 	rect := image.Rect(
 		(i%mRow)*size,
 		(i/mRow)*size,

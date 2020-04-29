@@ -6,7 +6,6 @@ import (
 	"time"
 
 	"github.com/bwmarrin/discordgo"
-
 	"github.com/turnage/graw/reddit"
 )
 
@@ -22,19 +21,18 @@ func RedditBot(s *discordgo.Session, m *discordgo.MessageCreate, msgList []strin
 	// each time the command gets used
 	bot, err := reddit.NewBotFromAgentFile("bot.agent", 0)
 	if err != nil {
-		fmt.Println("error:", err)
+		msg := fmt.Sprintf("error creating reddit bot: %s", err)
+		s.ChannelMessageSend(m.ChannelID, msg)
 		return
 	}
 
 	if len(msgList) < 2 {
 		s.ChannelMessageSend(m.ChannelID, "i need a subreddit to search.")
 		return
-	} else if len(msgList) > 2 {
-		msgList = msgList[0:2]
 	}
 
+	msgList = msgList[0:2]
 	subreddit := "/r/" + msgList[1]
-
 	harvest, err := bot.Listing(subreddit, "")
 	if err != nil {
 		fmt.Println("error:", err)
@@ -42,7 +40,8 @@ func RedditBot(s *discordgo.Session, m *discordgo.MessageCreate, msgList []strin
 	}
 
 	if len(harvest.Posts) == 0 {
-		s.ChannelMessageSend(m.ChannelID, "subreddit had no posts, try again.")
+		msg := fmt.Sprintf("no results found for %s, try another subreddit", subreddit)
+		s.ChannelMessageSend(m.ChannelID, msg)
 		return
 	}
 

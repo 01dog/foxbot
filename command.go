@@ -32,11 +32,11 @@ func ParseCommand(s *discordgo.Session, m *discordgo.MessageCreate, message stri
 
 	if command, ok := activeCommands[commandName]; ok && commandName == strings.ToLower(command.Name) {
 		isAdmin := InArray(config.AdminID, m.Author.ID)
-
 		if !command.AdminOnly || isAdmin {
 			command.Exec(s, m, msgList)
 			return
 		}
+
 		s.ChannelMessageSend(m.ChannelID, "you do not have permission to use this command!")
 		return
 	}

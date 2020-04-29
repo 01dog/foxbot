@@ -8,7 +8,8 @@ also make sure to edit the bot_default.agent (and rename it) for the reddit bot.
 ## important
 * add support for cooldowns on commands
 * proper logging
-* let owner change the current admin ID's?  
+* let owner change the current admin IDs?  
+* replace commands usint @ mentions with userIDs 
 
 ## reddit
 * clean it up a bit

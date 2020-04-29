@@ -12,12 +12,12 @@ func EvalMessage(s *discordgo.Session, m *discordgo.MessageCreate) {
 	if m.Author.ID == s.State.User.ID {
 		return
 	}
+
 	// ignore the message if it doesnt have the command prefix
 	if !strings.HasPrefix(m.Content, config.Prefix) {
 		return
 	}
 
-	// parse (and potentially execute) the command given
 	ParseCommand(s, m, func() string {
 		if strings.HasPrefix(m.Content, config.Prefix) {
 			return strings.TrimPrefix(m.Content, config.Prefix)

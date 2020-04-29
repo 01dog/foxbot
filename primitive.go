@@ -23,7 +23,6 @@ func init() {
 func pri(s *discordgo.Session, m *discordgo.MessageCreate, msgList []string) {
 	if len(m.Mentions) == 0 {
 		args := msgList[1:]
-
 		avatar, err := GetAvatarImage(s, m.Author.ID)
 		if err != nil {
 			fmt.Println("error getting user avatar:", err)
@@ -122,7 +121,7 @@ func morphImage(s *discordgo.Session, m *discordgo.MessageCreate, img image.Imag
 
 	img = transform.Resize(img, 256, 256, transform.Linear)
 	bg := primitive.MakeColor(primitive.AverageImageColor(img))
-	model := primitive.NewModel(img, bg, 1024, runtime.NumCPU())
+	model := primitive.NewModel(img, bg, 512, runtime.NumCPU())
 	argsInt, err := StrArrayToInt(args)
 	if err != nil {
 		s.ChannelMessageSend(m.ChannelID, "error converting arguments to type int, try again")
@@ -132,15 +131,15 @@ func morphImage(s *discordgo.Session, m *discordgo.MessageCreate, img image.Imag
 		for i := 0; i < 100; i++ {
 			model.Step(primitive.ShapeType(0), 0, 0)
 		}
-		s.ChannelMessageSend(m.ChannelID, "image done!")
 
+		s.ChannelMessageSend(m.ChannelID, "image done!")
 		return model.Context.Image()
 	}
 
 	for i := 0; i < 100; i++ {
 		model.Step(primitive.ShapeType(argsInt[0]), argsInt[1], argsInt[2])
 	}
-	s.ChannelMessageSend(m.ChannelID, "image done!")
 
+	s.ChannelMessageSend(m.ChannelID, "image done!")
 	return model.Context.Image()
 }

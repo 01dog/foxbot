@@ -12,7 +12,7 @@ import (
 	"github.com/bwmarrin/discordgo"
 )
 
-// InArray returns true of item is inside the array being checked
+// InArray returns true if item is inside the array being checked
 func InArray(arrayType interface{}, item interface{}) bool {
 	arr := reflect.ValueOf(arrayType)
 
@@ -51,7 +51,6 @@ func GetAvatarImage(s *discordgo.Session, userID string) (img image.Image, err e
 	if err != nil {
 		fmt.Println("error:", err)
 	}
-
 	return s.UserAvatarDecode(user)
 }
 
@@ -64,11 +63,13 @@ func SaveImage(img image.Image, pname, fname string) (err error) {
 		fmt.Println("failed to create path:", err)
 		return
 	}
+
 	err = jpeg.Encode(f, img, &jpeg.Options{Quality: 100})
 	if err != nil {
 		fmt.Println("failed to encode as jpeg:", err)
 		return
 	}
+
 	f.Close()
 	return nil
 }
@@ -83,6 +84,5 @@ func StrArrayToInt(a []string) (ia []int, err error) {
 		}
 		ia = append(ia, i)
 	}
-
 	return ia, nil
 }

@@ -17,8 +17,8 @@ func main() {
 		fmt.Println("error:", err)
 		return
 	}
-	defer dg.Close()
 
+	defer dg.Close()
 	dg.AddHandler(EvalMessage)
 	err = dg.Open()
 	if err != nil {
@@ -27,8 +27,8 @@ func main() {
 	}
 
 	dg.UpdateStatus(0, config.Prefix+"help")
-
 	fmt.Println("bot running!")
+
 	sc := make(chan os.Signal, 1)
 	signal.Notify(sc, syscall.SIGINT, syscall.SIGTERM, os.Interrupt, os.Kill)
 	<-sc

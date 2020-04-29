@@ -17,7 +17,6 @@ func msgHelp(s *discordgo.Session, m *discordgo.MessageCreate, msgList []string)
 			v.helpCommand(s, m)
 			return
 		}
-
 	}
 
 	// gets a list of active commands
@@ -31,6 +30,7 @@ func msgHelp(s *discordgo.Session, m *discordgo.MessageCreate, msgList []string)
 	em := NewEmbed().
 		AddField("bot help", strings.Join(commands, ", ")).
 		SetFooter("use >help [command] for a detailed info").MessageEmbed
+
 	s.ChannelMessageSendEmbed(m.ChannelID, em)
 }
 
