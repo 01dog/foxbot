@@ -23,14 +23,14 @@ func msgHelp(s *discordgo.Session, m *discordgo.MessageCreate, msgList []string)
 	// gets a list of active commands
 	var commands []string
 	for _, v := range activeCommands {
-		if m.Author.ID == config.AdminID || !v.AdminOnly {
+		if InArray(config.AdminID, m.Author.ID) || !v.AdminOnly {
 			commands = append(commands, "`"+v.Name+"`")
 		}
 	}
 
 	em := NewEmbed().
 		AddField("bot help", strings.Join(commands, ", ")).
-		SetFooter("use .help [command] for a detailed info").MessageEmbed
+		SetFooter("use >help [command] for a detailed info").MessageEmbed
 	s.ChannelMessageSendEmbed(m.ChannelID, em)
 }
 

@@ -31,7 +31,7 @@ func ParseCommand(s *discordgo.Session, m *discordgo.MessageCreate, message stri
 	}())
 
 	if command, ok := activeCommands[commandName]; ok && commandName == strings.ToLower(command.Name) {
-		isAdmin := m.Author.ID == config.AdminID
+		isAdmin := InArray(config.AdminID, m.Author.ID)
 
 		if !command.AdminOnly || isAdmin {
 			command.Exec(s, m, msgList)
@@ -69,8 +69,8 @@ func (c Command) SetHelp(help string) Command {
 	return c
 }
 
-//NeedAdmin ...
-func (c Command) NeedAdmin() Command {
+//ReqAdmin ...
+func (c Command) ReqAdmin() Command {
 	c.AdminOnly = true
 	return c
 }

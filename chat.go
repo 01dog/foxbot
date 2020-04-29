@@ -18,8 +18,7 @@ func init() {
 
 func dogMsg(s *discordgo.Session, m *discordgo.MessageCreate, msgList []string) {
 	messages := []string{
-		"björk", "*woof*", "*grrrrr*", "*wags tail*", "*shits on the floor*",
-		"^w^",
+		"björk", "*woof*", "*grrrrr*", "*wags tail*", "^w^",
 	}
 	rand.Seed(time.Now().UnixNano())
 	messageChosen := messages[rand.Intn(len(messages))]

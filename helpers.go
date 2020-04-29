@@ -6,10 +6,30 @@ import (
 	"image/jpeg"
 	"os"
 	"path"
+	"reflect"
 	"strconv"
 
 	"github.com/bwmarrin/discordgo"
 )
+
+// InArray returns true of item is inside the array being checked
+func InArray(arrayType interface{}, item interface{}) bool {
+	arr := reflect.ValueOf(arrayType)
+
+	// i feel like this should probably be reflect.Array instead of Slice but
+	// i'm not sure it will make a big difference. Slice just supresses this error
+	// so maybe this check isn't even needed? idk
+	if arr.Kind() != reflect.Slice {
+		println("invalid data type")
+	}
+
+	for i := 0; i < arr.Len(); i++ {
+		if arr.Index(i).Interface() == item {
+			return true
+		}
+	}
+	return false
+}
 
 //UserDetails lets us quickly access User info
 func UserDetails(s *discordgo.Session, userID string) (user *discordgo.User, err error) {

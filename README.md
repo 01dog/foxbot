@@ -6,12 +6,9 @@ also make sure to edit the bot_default.agent (and rename it) for the reddit bot.
 
 # TODO
 ## important
-* add support for multiple admins
 * add support for cooldowns on commands
 * proper logging
-
-## features
-* add commands for bild functions
+* let owner change the current admin ID's?  
 
 ## reddit
 * clean it up a bit

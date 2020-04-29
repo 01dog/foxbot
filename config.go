@@ -8,7 +8,7 @@ import (
 // Config ...
 type Config struct {
 	Token   string
-	AdminID string
+	AdminID []string
 	Prefix  string
 }
 
