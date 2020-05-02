@@ -12,7 +12,7 @@ import (
 // RenderIdenticon draws and renders our identicon
 func RenderIdenticon(id Identicon, userID string) (filename string, err error) {
 	img := image.NewRGBA(image.Rect(0, 0, 50, 50))
-	setBg(img)
+	setBG(img)
 
 	for i, v := range id.bitmap {
 		if v == 1 {
@@ -30,7 +30,7 @@ func RenderIdenticon(id Identicon, userID string) (filename string, err error) {
 	return filename, nil
 }
 
-func setBg(img *image.RGBA) {
+func setBG(img *image.RGBA) {
 	draw.Draw(img, img.Bounds(), &image.Uniform{color.White}, image.ZP, draw.Src)
 }
 

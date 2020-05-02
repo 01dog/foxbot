@@ -8,30 +8,9 @@ import (
 	"path"
 	"reflect"
 	"strconv"
-	"strings"
 
 	"github.com/bwmarrin/discordgo"
 )
-
-// GetIndexOf will get the index of a string in an array
-// this is specific ONLY to the covid tracker and needs to be reworked
-// but its 2AM so ill do it later. TODO
-func GetIndexOf(a []summary, x string) int {
-	if len(x) == 2 {
-		for i, n := range a {
-			if x == strings.ToLower(n.Code) {
-				return i
-			}
-		}
-	}
-
-	for i, n := range a {
-		if x == strings.ToLower(n.Name) {
-			return i
-		}
-	}
-	return 0 // TODO: make this something better
-}
 
 // IsInArray returns true if item is inside the array being checked
 func IsInArray(arrayType interface{}, item interface{}) bool {
