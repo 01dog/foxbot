@@ -8,19 +8,40 @@ import (
 	"path"
 	"reflect"
 	"strconv"
+	"strings"
 
 	"github.com/bwmarrin/discordgo"
 )
 
-// InArray returns true if item is inside the array being checked
-func InArray(arrayType interface{}, item interface{}) bool {
+// GetIndexOf will get the index of a string in an array
+// this is specific ONLY to the covid tracker and needs to be reworked
+// but its 2AM so ill do it later. TODO
+func GetIndexOf(a []summary, x string) int {
+	if len(x) == 2 {
+		for i, n := range a {
+			if x == strings.ToLower(n.Code) {
+				return i
+			}
+		}
+	}
+
+	for i, n := range a {
+		if x == strings.ToLower(n.Name) {
+			return i
+		}
+	}
+	return 0 // TODO: make this something better
+}
+
+// IsInArray returns true if item is inside the array being checked
+func IsInArray(arrayType interface{}, item interface{}) bool {
 	arr := reflect.ValueOf(arrayType)
 
 	// i feel like this should probably be reflect.Array instead of Slice but
 	// i'm not sure it will make a big difference. Slice just supresses this error
 	// so maybe this check isn't even needed? idk
 	if arr.Kind() != reflect.Slice {
-		println("invalid data type")
+		fmt.Println("invalid data type")
 	}
 
 	for i := 0; i < arr.Len(); i++ {
@@ -50,6 +71,7 @@ func GetAvatarImage(s *discordgo.Session, userID string) (img image.Image, err e
 	user, err := s.User(userID)
 	if err != nil {
 		fmt.Println("error:", err)
+		return
 	}
 	return s.UserAvatarDecode(user)
 }

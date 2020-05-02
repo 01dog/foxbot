@@ -22,7 +22,7 @@ func msgHelp(s *discordgo.Session, m *discordgo.MessageCreate, msgList []string)
 	// gets a list of active commands
 	var commands []string
 	for _, v := range activeCommands {
-		if InArray(config.AdminID, m.Author.ID) || !v.AdminOnly {
+		if IsInArray(config.AdminID, m.Author.ID) || !v.AdminOnly {
 			commands = append(commands, "`"+v.Name+"`")
 		}
 	}
