@@ -4,13 +4,21 @@ import (
 	"fmt"
 	"image"
 	"image/jpeg"
+	"math/rand"
 	"os"
 	"path"
 	"reflect"
 	"strconv"
+	"time"
 
 	"github.com/bwmarrin/discordgo"
 )
+
+// GenRandomNum generates a random number up to n
+func GenRandomNum(n int) int {
+	rand.Seed(time.Now().UnixNano())
+	return rand.Intn(n)
+}
 
 // IsInArray returns true if item is inside the array being checked
 func IsInArray(arrayType interface{}, item interface{}) bool {

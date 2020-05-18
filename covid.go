@@ -32,8 +32,6 @@ type summary struct {
 	TotalRecovered int    `json:"TotalRecovered"`
 }
 
-var responseObject response
-
 func init() {
 	NewCommand("covid", false, covidStats).SetHelp("get info on covid stats by country. search by country code, or leave blank for global stats." +
 		" please reference this list for valid country codes: https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2#Officially_assigned_code_elements").Add()
@@ -79,7 +77,9 @@ func getStats(s *discordgo.Session, m *discordgo.MessageCreate, arg string) (i i
 	if err != nil {
 		fmt.Println("error:", err)
 	}
+	responseObject = response{}
 
+	// look into using json.Decoder instead of unmarshal
 	data, _ := ioutil.ReadAll(r.Body)
 	json.Unmarshal(data, &responseObject)
 

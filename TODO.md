@@ -1,5 +1,6 @@
 # TODO
 ## important
+* move random number gen to helper func
 * add support for cooldowns on commands
 * proper logging
 * let owner change the current admin IDs?  
