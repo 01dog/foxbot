@@ -17,7 +17,7 @@ import (
 
 func init() {
 	NewCommand("quote", false, getQuote).SetHelp("get a random quote").Add()
-	NewCommand("addquote", false, addQuote).SetHelp("add quote").ReqAdmin().Add()
+	NewCommand("addquote", false, addQuote).SetHelp("add a quote. supports newlines with \\n. please use :copyright: for copyright symbols, etc.").ReqAdmin().Add()
 	// NewCommand("remquote", false, remQuote).SetHelp("remove quote by id").ReqAdmin().Add()
 	// NewCommand("listquotes", false, listQuotes).SetHelp("list quotes by id").ReqAdmin().Add()
 	initDB()
@@ -30,8 +30,10 @@ func getQuote(s *discordgo.Session, m *discordgo.MessageCreate, msgList []string
 	rows, _ := database.Query("SELECT quote FROM quotes ORDER BY RANDOM() LIMIT 1;")
 	for rows.Next() {
 		rows.Scan(&quote)
-		s.ChannelMessageSend(m.ChannelID, quote)
 	}
+
+	msg := strings.Replace(quote, `\n`, "\n", -1)
+	s.ChannelMessageSend(m.ChannelID, msg)
 }
 
 func addQuote(s *discordgo.Session, m *discordgo.MessageCreate, msgList []string) {
