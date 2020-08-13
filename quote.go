@@ -16,10 +16,10 @@ import (
 // select a quote by ID
 
 func init() {
-	NewCommand("quote", false, getQuote).SetHelp("get a random quote").Add()
-	NewCommand("addquote", false, addQuote).SetHelp("add a quote. supports newlines with \\n. please use :copyright: for copyright symbols, etc.").ReqAdmin().Add()
+	NewCommand("quote", false, getQuote).SetHelp("get a random quote, or by ID. use >listquotes to list valid IDs.").Add()
+	// NewCommand("listquotes", false, listQuotes).SetHelp("list quotes by id. use >quote ID to see the quote text.").Add()
+	NewCommand("addquote", false, addQuote).SetHelp("add a quote. supports newlines with \\n. please use \\:copyright: for copyright symbols, etc.").ReqAdmin().Add()
 	// NewCommand("remquote", false, remQuote).SetHelp("remove quote by id").ReqAdmin().Add()
-	// NewCommand("listquotes", false, listQuotes).SetHelp("list quotes by id").ReqAdmin().Add()
 	initDB()
 }
 
@@ -27,14 +27,52 @@ func getQuote(s *discordgo.Session, m *discordgo.MessageCreate, msgList []string
 	database, _ := sql.Open("sqlite3", "./quotes.db")
 	var quote string
 
-	rows, _ := database.Query("SELECT quote FROM quotes ORDER BY RANDOM() LIMIT 1;")
-	for rows.Next() {
-		rows.Scan(&quote)
-	}
+	if len(msgList) == 2 {
+		argsInt, err := StrArrayToInt(msgList[1:])
+		if err != nil {
+			s.ChannelMessageSend(m.ChannelID, "error converting arguments to type int, try again")
+			return
+		}
 
-	msg := strings.Replace(quote, `\n`, "\n", -1)
-	s.ChannelMessageSend(m.ChannelID, msg)
+		rows, err := database.Query("SELECT quote FROM quotes WHERE id=?", argsInt[0]) //TODO: whatever the smart way to do this is, do it
+		if err != nil {
+			errMsg := fmt.Sprintf("%d", err)
+			s.ChannelMessageSend(m.ChannelID, errMsg)
+			return
+		}
+
+		for rows.Next() {
+			rows.Scan(&quote)
+		}
+
+		msg := strings.Replace(quote, `\n`, "\n", -1)
+		s.ChannelMessageSend(m.ChannelID, msg)
+	} else if len(msgList) == 1 {
+		rows, _ := database.Query("SELECT quote FROM quotes ORDER BY RANDOM() LIMIT 1")
+		for rows.Next() {
+			rows.Scan(&quote)
+		}
+
+		msg := strings.Replace(quote, `\n`, "\n", -1)
+		s.ChannelMessageSend(m.ChannelID, msg)
+	}
 }
+
+// func listQuotes(s *discordgo.Session, m *discordgo.MessageCreate, msgList []string) {
+// 	var IDs []int
+// 	database, _ := sql.Open("sqlite3", "./quotes.db")
+// 	rows, _ := database.Query("SELECT id FROM quotes")
+// 	for rows.Next() {
+// 		var currentID int
+// 		rows.Scan(&currentID)
+// 		IDs = append(IDs, currentID)
+// 	}
+
+// 	// make intarraytostr https://stackoverflow.com/questions/37532255/one-liner-to-transform-int-into-string
+// 	IDString := strings.Join(StrIDs, " ")
+// 	msg := "valid quote IDs: " + IDstring
+// 	s.ChannelMessageSend(m.ChannelID, msg)
+// }
 
 func addQuote(s *discordgo.Session, m *discordgo.MessageCreate, msgList []string) {
 	if len(msgList) < 2 {
