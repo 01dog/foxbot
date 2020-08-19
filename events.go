@@ -16,7 +16,9 @@ func EvalMessage(s *discordgo.Session, m *discordgo.MessageCreate) {
 
 	// regex to match the N word
 	// this is because of you, Gust. . .
-	r, _ := regexp.Compile("(?i)n[ei1]+(g|6)+(ger|ga|a|6er|g3r|64|4|63r|e|r|ge|gr)[sz]*")
+	// TODO: refine this. there's bound to be a better way to search for matches between words.
+	// splitting and joining causes problems when innocent words match the patten after joining
+	r, _ := regexp.Compile("(?i)n[ei1]+(g|6)+(ger|ga|a|6er|g3r|64|4|63r|r|ge|gr)[sz]*")
 	message := strings.Split(m.Content, " ")
 	joinedMessage := strings.Join(message, "")
 
