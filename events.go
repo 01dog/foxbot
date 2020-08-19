@@ -18,7 +18,7 @@ func EvalMessage(s *discordgo.Session, m *discordgo.MessageCreate) {
 	// this is because of you, Gust. . .
 	// TODO: refine this. there's bound to be a better way to search for matches between words.
 	// splitting and joining causes problems when innocent words match the patten after joining
-	r, _ := regexp.Compile("(?i)n[ei1]+(g|6)+(ger|ga|a|6er|g3r|64|4|63r|r|ge|gr)[sz]*")
+	r, _ := regexp.Compile("(?i)n[ei1]+(g|6)+(ger|ga|6er|g3r|64|63r|ge|gr)[sz]*")
 	message := strings.Split(m.Content, " ")
 	joinedMessage := strings.Join(message, "")
 
