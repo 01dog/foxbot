@@ -7,9 +7,11 @@ import (
 
 // Config ...
 type Config struct {
-	Token   string
-	AdminID []string
-	Prefix  string
+	Token      string
+	AdminID    []string
+	Prefix     string
+	NSFWRoleID string
+	GuildID    string
 }
 
 // Configure will try to read the config file

@@ -21,13 +21,13 @@ func GenRandomNum(n int) int {
 }
 
 // IsInArray returns true if item is inside the array being checked
-func IsInArray(arrayType interface{}, item interface{}) bool {
+func IsInArray(item interface{}, arrayType interface{}) bool {
 	arr := reflect.ValueOf(arrayType)
 
 	// i feel like this should probably be reflect.Array instead of Slice but
 	// i'm not sure it will make a big difference. Slice just supresses this error
 	// so maybe this check isn't even needed? idk
-	if arr.Kind() != reflect.Slice {
+	if arr.Kind() != reflect.Slice && arr.Kind() != reflect.Array {
 		fmt.Println("invalid data type")
 	}
 
@@ -44,6 +44,7 @@ func UserDetails(s *discordgo.Session, userID string) (user *discordgo.User, err
 	user, err = s.User(userID)
 	if err != nil {
 		fmt.Println("error:", err)
+		return nil, err
 	}
 	return
 }
@@ -80,7 +81,7 @@ func SaveImage(img image.Image, pname, fname string) (err error) {
 	}
 
 	f.Close()
-	return nil
+	return
 }
 
 // StrArrayToInt will iterate over an array of type string, and convert it to type int
@@ -90,8 +91,9 @@ func StrArrayToInt(a []string) (ia []int, err error) {
 		i, err := strconv.Atoi(v)
 		if err != nil {
 			fmt.Println("error converting string array to int:", err)
+			return nil, err
 		}
 		ia = append(ia, i)
 	}
-	return ia, nil
+	return
 }
