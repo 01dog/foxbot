@@ -1,5 +1,7 @@
 {
     "Token": "bot token goes here",
     "AdminID": "admin user goes here",
-    "Prefix": "bot prefix goes here"
+    "Prefix": "bot prefix goes here",
+    "NSFWRoleID": "nsfw channel role goes here",
+    "GuildID": "server/guild id goes here"
 }
