@@ -29,7 +29,7 @@ func msgHelp(s *discordgo.Session, m *discordgo.MessageCreate, msgList []string)
 
 	em := NewEmbed().
 		AddField("bot help", strings.Join(commands, ", ")).
-		SetFooter("use >help [command] for a detailed info").MessageEmbed
+		SetFooter("use >help [command] for detailed info").MessageEmbed
 
 	s.ChannelMessageSendEmbed(m.ChannelID, em)
 }

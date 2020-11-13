@@ -57,12 +57,6 @@ func NewCommand(name string, needAdmin bool, f func(*discordgo.Session, *discord
 	}
 }
 
-//Alias ...
-func (c Command) Alias(a string) Command {
-	activeCommands[strings.ToLower(a)] = c
-	return c
-}
-
 //SetHelp ...
 func (c Command) SetHelp(help string) Command {
 	c.Help = help
